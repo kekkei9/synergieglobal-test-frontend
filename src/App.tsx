@@ -1,27 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import TestComponent from "./components/TestComponent/TestComponent";
+import ErrorPage from "./pages/error-page";
+import HomePage from "./pages/home-page";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <HomePage />,
+    errorElement: <ErrorPage />,
+  },
+]);
 
 function App() {
-  const [count, setCount] = useState(0);
-
-  return (
-    <>
-      <TestComponent />
-      <h1 className="text-gray-900">Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
