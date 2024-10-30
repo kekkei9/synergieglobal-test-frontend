@@ -1,9 +1,9 @@
 import React from "react";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import "./App.css";
-import ErrorPage from "./pages/error-page";
-import HomePage from "./pages/home-page";
-import ShortUrlPage from "./pages/short-url-page";
+import ErrorPage from "./pages/ErrorPage";
+import HomePage from "./pages/HomePage";
+import ShortUrlPage from "./pages/ShortUrlPage";
 
 const router = createHashRouter([
   {
