@@ -7,8 +7,10 @@ import _ from "lodash";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
 import { Copy } from "@mynaui/icons-react";
+import { useToast } from "@/hooks/use-toast";
 
 const HomePage = () => {
+  const { toast } = useToast();
   const [error, setError] = useState<string | null>(null);
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
@@ -26,15 +28,22 @@ const HomePage = () => {
     []
   );
 
+  useEffect(() => debounceSetError(longUrl), [longUrl]);
+
   const getShortUrl = async () => {
     const { data: response } = await generateShortUrl(longUrl);
     setShortUrl(response.shortUrl);
   };
 
-  useEffect(() => debounceSetError(longUrl), [longUrl]);
+  const onClickCopyShortUrl = () => {
+    copyToClipboard(shortUrl);
+    toast({
+      title: "Short url copied",
+    });
+  };
 
   return (
-    <div className="w-full flex flex-col items-center">
+    <div className="w-full flex flex-col items-center p-4 gap-2">
       <div className="font-semibold text-2xl">Link shorter</div>
       <div className="grid w-full items-center gap-2">
         <Input
@@ -50,9 +59,9 @@ const HomePage = () => {
         Click here to get short url
       </Button>
       {!!shortUrl.length && (
-        <div>
+        <div className="flex gap-2">
           <a href={shortUrl}>{shortUrl}</a>
-          <Copy onClick={() => copyToClipboard(shortUrl)} />
+          <Copy onClick={onClickCopyShortUrl} className="cursor-pointer" />
         </div>
       )}
     </div>
