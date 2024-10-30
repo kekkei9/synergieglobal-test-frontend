@@ -6,6 +6,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import _ from "lodash";
 import { Button } from "@/components/ui/button";
 import clsx from "clsx";
+import { Copy } from "@mynaui/icons-react";
 
 const HomePage = () => {
   const [error, setError] = useState<string | null>(null);
@@ -51,7 +52,7 @@ const HomePage = () => {
       {!!shortUrl.length && (
         <div>
           <a href={shortUrl}>{shortUrl}</a>
-          <div onClick={() => copyToClipboard(shortUrl)}>copy</div>
+          <Copy onClick={() => copyToClipboard(shortUrl)} />
         </div>
       )}
     </div>
