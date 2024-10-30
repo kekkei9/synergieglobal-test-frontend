@@ -1,10 +1,14 @@
 import { Url } from "@/types/url";
 import { axiosClient } from "../axiosClient";
 
-export const generateShortUrl = (url: string) =>
-  axiosClient.post<{ shortUrl: string }>("/urls", {
-    url,
-  });
+export const generateShortUrl = (generateShortUrlPayload: {
+  longUrl: string;
+  password: string;
+  customShortCode: string;
+}) => axiosClient.post<{ shortUrl: string }>("/urls", generateShortUrlPayload);
 
-export const getOriginalUrl = (shortUrlId: string) =>
-  axiosClient.get<Url & { message: string }>(`/urls/${shortUrlId}`);
+export const getOriginalUrl = (shortUrlId: string, password?: string) =>
+  axiosClient.post<Url & { message: string }>(
+    `/urls/${shortUrlId}`,
+    password ? { password } : undefined
+  );
